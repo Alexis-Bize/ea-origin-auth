@@ -1,5 +1,5 @@
 {
-    "name": "@zeny/ea-origin-auth",
+    "name": "ea-origin-auth",
     "description": "Simple EA Origin authentication module.",
     "version": "0.0.1",
     "license": "MIT",

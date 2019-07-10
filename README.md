@@ -4,7 +4,7 @@ Simple EA Origin authentication module.
 
 ### Install
 ```
-$ npm install @zeny/ea-origin-auth
+$ npm install ea-origin-auth
 ```
 
 ### Clone
@@ -20,7 +20,7 @@ $ npm run build
 ### Usage example
 
 ```
-import EAOriginAuth from '@zeny/ea-origin-auth';
+import EAOriginAuth from 'ea-origin-auth';
 
 EAOriginAuth.authenticate('user@domain.com', '*********')
     .then(console.info)
