@@ -1,14 +1,15 @@
 // **** TYPINGS **** //
 
 type ExtraErrorProperties = {
-    statusCode?: number;
-    reason?: string;
+    statusCode: number;
+    reason: string;
 };
 
-// **** CLASS **** //
+// **** PUBLIC METHODS **** //
 
-class EAOriginAuthError extends Error {
-    extra: ExtraErrorProperties;
+export class EAOriginAuthError extends Error {
+    readonly EAOriginAuthError = true;
+    readonly extra: ExtraErrorProperties;
 
     constructor(message: string, extra: ExtraErrorProperties) {
         super(message);
@@ -18,26 +19,20 @@ class EAOriginAuthError extends Error {
     }
 }
 
-// **** DEFINITIONS **** //
-
-const errors = {
+export const errors = {
     internal: (message = 'Something went wrong...') =>
         new EAOriginAuthError(message, {
             statusCode: 500,
             reason: 'INTERNAL_ERROR'
         }),
-    matchError: (message = 'Match error') =>
+    matchError: (message = 'Could not match required parameters') =>
         new EAOriginAuthError(message, {
             statusCode: 400,
             reason: 'MATCH_ERROR'
         }),
-    invalidCredentials: (message = 'Invalid credentials') =>
+    invalidCredentials: (message = 'Invalid credentials or 2FA enabled') =>
         new EAOriginAuthError(message, {
             statusCode: 401,
             reason: 'INVALID_CREDENTIALS'
         })
 };
-
-// **** PUBLIC METHODS **** //
-
-export = errors;

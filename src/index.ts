@@ -1,7 +1,12 @@
 import * as request from 'request';
-import * as errors from './errors';
+import { EAOriginAuthError, errors } from './errors';
 import { stringify } from 'querystring';
-import { AuthenticateResponse } from '..';
+
+import {
+    AuthenticateResponseOutput,
+    AuthenticateSuccessResponse,
+    AuthenticateFailureOutput
+} from '..';
 
 // **** TYPINGS **** //
 
@@ -147,7 +152,7 @@ const _getAuthenticationCookie = (
 
 const _authenticateWithCookie = (
     cookieString: string
-): Promise<AuthenticateResponse> =>
+): Promise<AuthenticateSuccessResponse> =>
     new Promise((resolve, reject) => {
         request(
             {
@@ -161,21 +166,46 @@ const _authenticateWithCookie = (
             (err: Error | void, _: request.Response, body: any) =>
                 err
                     ? reject(errors.internal(err.message))
-                    : resolve(JSON.parse(body) as AuthenticateResponse)
+                    : resolve(JSON.parse(body) as AuthenticateSuccessResponse)
         );
     });
 
-// **** PUBLIC METHODS *** //
-
-export const authenticate = async (
+const _processAuthentication = async (
     email: string,
     password: string
-): Promise<AuthenticateResponse> =>
-    _authenticateWithCookie(
+): Promise<AuthenticateResponseOutput> => ({
+    success: true,
+    response: await _authenticateWithCookie(
         await _getAuthenticationCookie(
             await _logUser(await _preAuth(), {
                 email,
                 password
             })
         )
-    );
+    )
+});
+
+const _onAuthenticationError = (
+    err: Error | EAOriginAuthError
+): AuthenticateFailureOutput => {
+    const error = !(err instanceof EAOriginAuthError)
+        ? errors.internal(err.message)
+        : err;
+
+    return {
+        success: false,
+        response: {
+            message: error.message,
+            statusCode: error.extra.statusCode,
+            reason: error.extra.reason
+        }
+    };
+};
+
+// **** PUBLIC METHODS *** //
+
+export const authenticate = async (
+    email: string,
+    password: string
+): Promise<AuthenticateResponseOutput> =>
+    _processAuthentication(email, password).catch(_onAuthenticationError);

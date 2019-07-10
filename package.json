@@ -1,5 +1,5 @@
 {
-    "name": "ea-origin-auth",
+    "name": "@zeny/ea-origin-auth",
     "description": "Simple EA Origin authentication module.",
     "version": "0.0.1",
     "license": "MIT",
@@ -7,10 +7,21 @@
         "name": "Alexis Bize",
         "email": "alexis.bize@gmail.com"
     },
+    "keywords": [
+        "ea",
+        "origin",
+        "authentication"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Alexis-Bize/ea-origin-auth"
+    },
     "scripts": {
         "build": "npm run clean && ./node_modules/.bin/tsc",
         "clean": "rm -rf ./dist",
-        "start": "node ./dist"
+        "test": "echo \"No tests specified, skipping...\" && exit 0",
+        "prepublishOnly": "npm run test && npm run build",
+        "watch": "./node_modules/.bin/tsc-watch --onSuccess \"node ./dist\""
     },
     "dependencies": {
         "request": "^2.88.0"
