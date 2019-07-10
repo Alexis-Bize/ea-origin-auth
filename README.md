@@ -51,7 +51,7 @@ EAOriginAuth.authenticate('user@domain.com', '*********')
     "response": {
         "message": "Invalid credentials or 2FA enabled",
         "statusCode": 401,
-        "reason ": "INVALID_CREDENTIALS"
+        "reason": "INVALID_CREDENTIALS"
     }
 }
 ```
