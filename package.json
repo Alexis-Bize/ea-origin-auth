@@ -1,0 +1,24 @@
+{
+    "name": "ea-origin-auth",
+    "description": "Simple EA Origin authentication module.",
+    "version": "0.0.1",
+    "license": "MIT",
+    "author": {
+        "name": "Alexis Bize",
+        "email": "alexis.bize@gmail.com"
+    },
+    "scripts": {
+        "build": "npm run clean && ./node_modules/.bin/tsc",
+        "clean": "rm -rf ./dist",
+        "start": "node ./dist"
+    },
+    "dependencies": {
+        "request": "^2.88.0"
+    },
+    "devDependencies": {
+        "@types/node": "^12.6.1",
+        "@types/request": "^2.48.1",
+        "tsc-watch": "^2.2.1",
+        "typescript": "^3.5.3"
+    }
+}
