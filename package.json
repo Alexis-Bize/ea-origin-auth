@@ -1,7 +1,7 @@
 {
     "name": "ea-origin-auth",
     "description": "Simple EA Origin authentication module.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "license": "MIT",
     "author": {
         "name": "Alexis Bize",
@@ -16,6 +16,7 @@
         "type": "git",
         "url": "https://github.com/Alexis-Bize/ea-origin-auth"
     },
+    "main": "./dist/index.js",
     "scripts": {
         "build": "npm run clean && ./node_modules/.bin/tsc",
         "clean": "rm -rf ./dist",
